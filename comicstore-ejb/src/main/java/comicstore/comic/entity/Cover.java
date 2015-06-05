@@ -1,4 +1,4 @@
-package comicstore.comic;
+package comicstore.comic.entity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package comicstore.comic;
+package comicstore.comic.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +12,9 @@ import core.persistence.AbstractEntity;
 @Entity
 @XmlRootElement
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
-public class Format extends AbstractEntity {
+public class Genre extends AbstractEntity {
 
-	private static final long serialVersionUID = -7236593832224048904L;
+	private static final long serialVersionUID = 1058836968157477576L;
 
 	@Column(length=64,nullable=false)
 	@NotNull
@@ -58,12 +58,12 @@ public class Format extends AbstractEntity {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Format formatToCompare = (Format) obj;
+		Genre genreToCompare = (Genre) obj;
 		if (name == null) {
-			if (formatToCompare.name != null) {
+			if (genreToCompare.name != null) {
 				return false;
 			}
-		} else if (!name.equals(formatToCompare.name)) {
+		} else if (!name.equals(genreToCompare.name)) {
 			return false;
 		}
 		return true;
@@ -71,6 +71,6 @@ public class Format extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "Format [name=" + name + "]";
+		return "Genre [name=" + name + "]";
 	}
 }

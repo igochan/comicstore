@@ -1,4 +1,4 @@
-package comicstore.comic;
+package comicstore.comic.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

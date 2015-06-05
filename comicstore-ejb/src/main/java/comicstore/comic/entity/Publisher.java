@@ -1,4 +1,4 @@
-package comicstore.comic;
+package comicstore.comic.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,21 +7,18 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import core.persistence.AbstractEntity;
+import core.persistence.AuditedEntity;
 
 @Entity
 @XmlRootElement
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
-public class Schedule extends AbstractEntity {
+public class Publisher extends AuditedEntity {
 
-	private static final long serialVersionUID = 5457903503616144111L;
+	private static final long serialVersionUID = -2134696650111648176L;
 
-	@Column(length = 64, nullable = false)
 	@NotNull
-	private String name;
-
 	@Column(length = 64)
-	private String description;
+	private String name;
 
 	public String getName() {
 		return name;
@@ -29,22 +26,6 @@ public class Schedule extends AbstractEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
 	}
 
 	@Override
@@ -58,19 +39,27 @@ public class Schedule extends AbstractEntity {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Schedule scheduleToCompare = (Schedule) obj;
+		Publisher publisherToCompare = (Publisher) obj;
 		if (name == null) {
-			if (scheduleToCompare.name != null) {
+			if (publisherToCompare.name != null) {
 				return false;
 			}
-		} else if (!name.equals(scheduleToCompare.name)) {
+		} else if (!name.equals(publisherToCompare.name)) {
 			return false;
 		}
 		return true;
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
 	public String toString() {
-		return "Schedule [name=" + name + "]";
+		return name;
 	}
 }

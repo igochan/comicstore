@@ -1,4 +1,4 @@
-package comicstore.comic;
+package comicstore.comic.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
