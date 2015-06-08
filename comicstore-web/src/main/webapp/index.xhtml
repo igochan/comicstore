@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml">
 
-<f:view contentType="text/html">
-	<h:head>
-		<title>Comicstore</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	</h:head>
-	<h:body>
-	<h:outputText value="Hola mundo" />
-	</h:body>
-</f:view>
-</html>
+	<ui:define name="title">
+		<title>Comicstore - INDEX</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:outputText value="Hola Mundo" />
+	</ui:define>
+</ui:composition>
