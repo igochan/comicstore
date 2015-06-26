@@ -3,3 +3,5 @@ target/
 .directory
 .classpath
 .project
+*.jsfdia
+.tern-project

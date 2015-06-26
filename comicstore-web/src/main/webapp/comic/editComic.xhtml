@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['comic.add']}</title>
+	</ui:define>
+	
+	<ui:param name="selectMenu" value="comic" />
+
+	<ui:define name="content">
+		<h:form>
+			<h:outputLabel value="#{i18n['comic.name']}">
+				<h:inputText id="name" value="#{editComicBean.comic.name}"
+					label="#{i18n['comic.name']}" />
+			</h:outputLabel>
+			
+			<h:outputLabel value="#{i18n['comic.format']}">
+				<h:selectOneMenu id="format" label="#{i18n['comic.format']}"
+					value="#{editComicBean.comic.format}">
+					<f:selectItems var="format"
+						itemValue="#{editComicBean.comic.format}"
+						value="#{applicationBean.formats}" itemLabel="#{format.name}" />
+				</h:selectOneMenu>
+			</h:outputLabel>
+			
+			<h:outputLabel value="#{i18n['comic.genre']}">
+				<h:selectOneMenu id="genre" label="#{i18n['comic.genre']}"
+					value="#{editComicBean.comic.genre}">
+					<f:selectItems var="genre" itemValue="#{editComicBean.comic.genre}"
+						value="#{applicationBean.genres}" itemLabel="#{genre.name}" />
+				</h:selectOneMenu>
+			</h:outputLabel>
+			
+			<h:outputLabel value="#{i18n['comic.schedule']}">
+				<h:selectOneMenu id="schedule" label="#{i18n['comic.schedule']}"
+					value="#{editComicBean.comic.schedule}">
+					<f:selectItems var="schedule"
+						itemValue="#{editComicBean.comic.schedule}"
+						value="#{applicationBean.schedules}" itemLabel="#{schedule.name}" />
+				</h:selectOneMenu>
+			</h:outputLabel>
+			
+			<h:outputLabel value="#{i18n['comic.publisher']}">
+				<h:inputText id="publisher"
+					value="#{editComicBean.comic.publisher.name}"
+					label="#{i18n['comic.publisher']}" />
+			</h:outputLabel>
+			
+			<h:outputLabel value="#{i18n['comic.volume']}">
+				<h:inputText id="volume" value="#{editComicBean.comic.volume}"
+					label="#{i18n['comic.volume']}" />
+			</h:outputLabel>
+
+			<h:commandButton value="#{i18n['action.save']}"
+				action="#{editComicBean.save}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+

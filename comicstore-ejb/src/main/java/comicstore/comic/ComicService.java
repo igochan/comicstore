@@ -9,5 +9,7 @@ import core.service.GenericService;
 public interface ComicService extends GenericService{
 	
 	public List<Issue> selectAllIssues(Comic comic);
+	
+	public Comic selectComicByName(String name);
 
 }

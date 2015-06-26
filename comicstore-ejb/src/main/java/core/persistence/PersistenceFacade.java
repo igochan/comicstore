@@ -3,7 +3,7 @@ package core.persistence;
 import java.util.List;
 import java.util.Map;
 
-public interface GenericDao {
+public interface PersistenceFacade {
 
 	public <T extends AbstractEntity> void insert(T entity);
 
@@ -11,7 +11,7 @@ public interface GenericDao {
 
 	public <T extends AbstractEntity> void delete(T entity);
 
-	public <T extends AbstractEntity> T select(Class<T> clazz, Long id);
+	public <T extends AbstractEntity> T selectBytId(Class<T> clazz, Long id);
 
 	public <T extends AbstractEntity> List<T> selectAll(Class<T> clazz);
 

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -20,7 +21,7 @@ import core.persistence.AuditedEntity;
 
 @Entity
 @XmlRootElement
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name", "volume" }))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name", "volume" }), indexes = @Index(name = "name", columnList = "name", unique = false))
 public class Comic extends AuditedEntity {
 
 	private static final long serialVersionUID = 7750637931724949574L;
@@ -133,8 +134,7 @@ public class Comic extends AuditedEntity {
 			if (comicToCompare.volume != null) {
 				return false;
 			}
-		}
-		else if (volume != comicToCompare.volume) {
+		} else if (volume != comicToCompare.volume) {
 			return false;
 		}
 		return true;
@@ -154,10 +154,10 @@ public class Comic extends AuditedEntity {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(name);
-		if( volume != null ){
+		if (volume != null) {
 			sb.append(", vol ").append(volume);
 		}
-		
+
 		return sb.toString();
 	}
 }

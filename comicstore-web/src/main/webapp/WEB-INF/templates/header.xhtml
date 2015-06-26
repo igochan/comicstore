@@ -3,5 +3,25 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
+	<h:panelGroup layout="block" id="logo">
+	</h:panelGroup>
+	<ui:insert name="menu">
+		<h:form id="nav">
+			<nav id="menu">
+				<ul>
+					<li><h:commandLink value="#{i18n['menu.index']}"
+							action="/index?faces-redirect=true"
+							styleClass="#{selectMenu eq 'index' ? 'select':''}" /></li>
+					<li><h:commandLink value="#{i18n['menu.add_comic']}"
+							action="/comic/addComic.jsf?faces-redirect=true"
+							styleClass="#{selectMenu eq 'comic' ? 'select':''}" /></li>
+					<li><h:commandLink value="#{i18n['menu.catalog']}"
+							styleClass="#{selectMenu eq 'offers' ? 'select':''}" /></li>
+					<li><h:commandLink value="#{i18n['menu.search']}"
+							styleClass="#{selectMenu eq 'reports' ? 'select':''}" /></li>
+				</ul>
+			</nav>
+		</h:form>
+	</ui:insert>
+
 </ui:composition>

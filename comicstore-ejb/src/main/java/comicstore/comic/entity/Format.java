@@ -1,50 +1,22 @@
 package comicstore.comic.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import core.persistence.AbstractEntity;
+import core.persistence.LookupEntity;
 
 @Entity
 @XmlRootElement
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
-public class Format extends AbstractEntity {
+public class Format extends LookupEntity {
 
 	private static final long serialVersionUID = -7236593832224048904L;
 
-	@Column(length=64,nullable=false)
-	@NotNull
-	private String name;
-
-	@Column(length=64)
-	private String description;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+		return super.hashCode();
 	}
 
 	@Override
@@ -59,14 +31,7 @@ public class Format extends AbstractEntity {
 			return false;
 		}
 		Format formatToCompare = (Format) obj;
-		if (name == null) {
-			if (formatToCompare.name != null) {
-				return false;
-			}
-		} else if (!name.equals(formatToCompare.name)) {
-			return false;
-		}
-		return true;
+		return super.equals(formatToCompare);
 	}
 
 	@Override

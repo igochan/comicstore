@@ -1,14 +1,15 @@
 package core.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,8 +17,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-@Stateless
-public class GenericDaoImpl implements GenericDao {
+/**
+ *  
+ * @author abel
+ *
+ */
+@Persistence
+public class PersistenceFacadeImpl implements PersistenceFacade {
 
 	private final static int MAX_RESULTS = 150;
 
@@ -41,6 +47,7 @@ public class GenericDaoImpl implements GenericDao {
 		if (em.contains(entity)) {
 			em.remove(entity);
 		} else {
+			logger.log(Level.FINEST, "Detached entity");
 			em.remove(em.merge(entity));
 		}
 	}
@@ -60,16 +67,22 @@ public class GenericDaoImpl implements GenericDao {
 	}
 
 	@Override
-	public <T extends AbstractEntity> T select(Class<T> clazz, Long id) {
+	public <T extends AbstractEntity> T selectBytId(Class<T> clazz, Long id) {
 		if (clazz == null) {
 			throw new NullPointerException();
 		}
 		if (id == null || id.equals(0)) {
 			throw new IllegalArgumentException("Id must not be 0");
 		}
-		logger.log(Level.FINE, "Select entity {0} with Id={1}", new Object[] {
+		logger.log(Level.FINE, "Select entity {0} by id={1}", new Object[] {
 				clazz, id });
-		return em.find(clazz, id);
+		T result = null;
+		try {
+			result = em.find(clazz, id);
+		} catch (NoResultException ex) {
+			result = null;
+		}
+		return result;
 	}
 
 	@Override
@@ -77,48 +90,60 @@ public class GenericDaoImpl implements GenericDao {
 		if (clazz == null) {
 			throw new NullPointerException();
 		}
-		logger.log(Level.FINE, "Select all entities from class {0}", clazz);
-		TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, null);
-		paginate(0, MAX_RESULTS, typedQuery);
-		return typedQuery.getResultList();
+		logger.log(Level.FINE, "Select all {0}", clazz);
+		return selectByProperties(clazz, null, MAX_RESULTS, 0);
 	}
 
 	@Override
 	public <T extends AbstractEntity> T selectByProperties(Class<T> clazz,
 			Map<String, Object> properties) {
+		if (clazz == null) {
+			throw new NullPointerException();
+		}
+		logger.log(Level.FINE, "Select by properties {0}", clazz);
 		TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, properties);
-		parametrize(properties, typedQuery);
-		return typedQuery.getSingleResult();
+		return buildTypedQuerySingleResult(properties, typedQuery);
 	}
 
 	@Override
 	public <T extends AbstractEntity> List<T> selectByProperties(
 			Class<T> clazz, Map<String, Object> properties, int pageSize,
 			int pageNumber) {
+		if (clazz == null) {
+			throw new NullPointerException();
+		}
+		logger.log(Level.FINE, "Select by properties {0}", clazz);
 		TypedQuery<T> typedQuery = createQueryFromCriteria(clazz, properties);
-		paginate(pageSize, pageNumber, typedQuery);
-		parametrize(properties, typedQuery);
-		return typedQuery.getResultList();
+		return buildTypedQuery(properties, pageNumber, pageSize, typedQuery);
 	}
 
 	@Override
 	public <T extends AbstractEntity> T selectByTypedQuery(Class<T> clazz,
 			String queryName, Map<String, Object> parameters) {
+		if (clazz == null) {
+			throw new NullPointerException();
+		}
+		if (queryName == null) {
+			throw new NullPointerException();
+		}
 		logger.log(Level.FINE, "Executing named query: {0}", queryName);
-		TypedQuery<T> query = em.createNamedQuery(queryName, clazz);
-		parametrize(parameters, query);
-		return query.getSingleResult();
+		TypedQuery<T> typedQuery = em.createNamedQuery(queryName, clazz);
+		return buildTypedQuerySingleResult(parameters, typedQuery);
 	}
 
 	@Override
 	public <T extends AbstractEntity> List<T> selectByTypedQuery(
 			Class<T> clazz, String queryName, Map<String, Object> parameters,
 			int pageNumber, int pageSize) {
+		if (clazz == null) {
+			throw new NullPointerException();
+		}
+		if (queryName == null) {
+			throw new NullPointerException();
+		}
 		logger.log(Level.FINE, "Executing named query: {0}", queryName);
-		TypedQuery<T> query = em.createNamedQuery(queryName, clazz);
-		paginate(pageSize, pageNumber, query);
-		parametrize(parameters, query);
-		return query.getResultList();
+		TypedQuery<T> typedQuery = em.createNamedQuery(queryName, clazz);
+		return buildTypedQuery(parameters, pageNumber, pageSize, typedQuery);
 	}
 
 	@Override
@@ -140,20 +165,48 @@ public class GenericDaoImpl implements GenericDao {
 		}
 		return ret;
 	}
-	
+
+	private <T extends AbstractEntity> List<T> buildTypedQuery(
+			Map<String, Object> parameters, int pageNumber, int pageSize,
+			TypedQuery<T> typedQuery) {
+		paginate(pageSize, pageNumber, typedQuery);
+		parametrize(parameters, typedQuery);
+		List<T> result = null;
+		try {
+			result = typedQuery.getResultList();
+		} catch (NoResultException ex) {
+			logger.log(Level.WARNING, "No result found");
+			result = new ArrayList<T>();
+		}
+		return result;
+	}
+
+	private <T extends AbstractEntity> T buildTypedQuerySingleResult(
+			Map<String, Object> parameters, TypedQuery<T> query) {
+		parametrize(parameters, query);
+		T result = null;
+		try {
+			result = query.getSingleResult();
+		} catch (NoResultException ex) {
+			logger.log(Level.WARNING, "No result found");
+			result = null;
+		}
+		return result;
+	}
+
 	private <T extends AbstractEntity> TypedQuery<T> createQueryFromCriteria(
 			Class<T> clazz, Map<String, Object> properties) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<T> cq = cb.createQuery(clazz);
 		Root<T> root = cq.from(clazz);
 		CriteriaQuery<T> criteriaQuery = cq.select(root);
-
 		if (properties != null && !properties.isEmpty()) {
 			Set<String> keys = properties.keySet();
 			Predicate condition = null;
 			for (String key : keys) {
 				if (condition == null) {
-					condition = cb.equal(root.get(key), properties.get(key));
+					condition = cb.equal(root.get(key),
+							cb.parameter(String.class, "name"));
 				} else {
 					condition = cb.and(condition);
 				}

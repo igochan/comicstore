@@ -43,15 +43,14 @@ public class Issue extends AuditedEntity {
 
 	@Min(value = 1)
 	private Integer edition = 1;
-
+	
 	@Min(value = 1)
 	private Integer number = 1;
 
 	@Temporal(TemporalType.DATE)
 	private Date published;
 
-	@Column(length = 128, nullable = false)
-	@NotNull
+	@Column(length = 128)
 	private String title;
 
 	@ManyToMany

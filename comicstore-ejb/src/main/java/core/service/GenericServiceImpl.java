@@ -1,18 +1,24 @@
 package core.service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import core.persistence.AbstractEntity;
-import core.persistence.GenericDao;
+import core.persistence.Persistence;
+import core.persistence.PersistenceFacade;
 
 @Stateless
 public class GenericServiceImpl implements GenericService {
-
+	
 	@Inject
-	protected GenericDao genericDao;
+	protected Logger logger;
+
+	@Persistence
+	@Inject
+	protected PersistenceFacade genericDao;
 
 	@Override
 	public <T extends AbstractEntity> void insert(T entity) {
@@ -43,7 +49,7 @@ public class GenericServiceImpl implements GenericService {
 		if (clazz == null || id == null) {
 			throw new NullPointerException();
 		}
-		return genericDao.select(clazz, id);
+		return genericDao.selectBytId(clazz, id);
 	}
 
 	@Override

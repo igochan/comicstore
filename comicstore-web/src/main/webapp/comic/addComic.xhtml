@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="title">
+		<title>#{i18n['comic.add']}</title>
+	</ui:define>
+
+	<ui:param name="selectMenu" value="comic" />
+
+	<ui:define name="content">
+
+		<h:form rendered="#{not addComicBean.newComic}">
+			<h:outputLabel value="#{i18n['comic.name']}">
+				<h:inputText id="searchName" value="#{addComicBean.comicName}"
+					label="#{i18n['comic.name']}" />
+			</h:outputLabel>
+			<h:commandButton value="#{i18n['action.search']}"
+				action="#{addComicBean.searchComic}" />
+		</h:form>
+
+		<h:form id="comic_form" 
+			enctype="multipart/form-data" rendered="#{addComicBean.newComic}">
+
+			<h2>
+				<h:outputText value="#{i18n['comic.message.not_found']}" />
+			</h2>
+
+			<h3>
+				<h:outputText value="#{i18n['comic.message.add_comic']}" />
+			</h3>
+
+			<h:outputLabel value="#{i18n['comic.name']}">
+				<h:inputText id="name" value="#{addComicBean.comic.name}"
+					label="#{i18n['comic.name']}" />
+			</h:outputLabel>
+
+			<h:outputLabel value="#{i18n['comic.publisher']}">
+				<h:inputText id="publisher"
+					value="#{addComicBean.comic.publisher.name}"
+					label="#{i18n['comic.publisher']}" />
+			</h:outputLabel>
+
+			<h:outputLabel value="#{i18n['comic.format']}">
+				<h:selectOneMenu id="format" label="#{i18n['comic.format']}"
+					value="#{addComicBean.comic.format}">
+					<f:selectItems var="format"
+						itemValue="#{addComicBean.comic.format}"
+						value="#{applicationBean.formats}" itemLabel="#{format.name}" />
+				</h:selectOneMenu>
+			</h:outputLabel>
+
+			<h:commandButton value="#{i18n['action.save']}"
+				action="#{addComicBean.save}" />
+
+			<h:commandButton value="#{i18n['action.advanced']}"
+				action="#{addComicBean.advanced}" immediate="true" />
+
+			<h:panelGroup layout="panel"
+				rendered="#{empty addComicBean.issue.cover.coverImageFileName}">
+				<h:outputLabel value="#{i18n['issue.cover']}">
+					<h:inputFile id="cover_image" value="#{addComicBean.part}" />
+				</h:outputLabel>
+				<h:commandButton value="+" action="#{addComicBean.upload}">
+					<f:ajax execute=":comic_form:cover_image" render="@form" />
+				</h:commandButton>
+			</h:panelGroup>
+
+			<h:graphicImage id="cover"
+				value="/images/#{addComicBean.issue.cover.coverImageFileName}"
+				rendered="#{not empty addComicBean.issue.cover.coverImageFileName}" />
+
+			<h:panelGroup layout="panel" rendered="#{addComicBean.advancedView}">
+				<h:outputLabel value="#{i18n['comic.volume']}">
+					<h:inputText id="volume" value="#{addComicBean.comic.volume}"
+						label="#{i18n['comic.volume']}" />
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['comic.genre']}">
+					<h:selectOneMenu id="genre" label="#{i18n['comic.genre']}"
+						value="#{addComicBean.comic.genre}">
+						<f:selectItems var="genre" itemValue="#{addComicBean.comic.genre}"
+							value="#{applicationBean.genres}" itemLabel="#{genre.name}" />
+					</h:selectOneMenu>
+				</h:outputLabel>
+
+				<h:outputLabel value="#{i18n['comic.schedule']}">
+					<h:selectOneMenu id="schedule" label="#{i18n['comic.schedule']}"
+						value="#{addComicBean.comic.schedule}">
+						<f:selectItems var="schedule"
+							itemValue="#{addComicBean.comic.schedule}"
+							value="#{applicationBean.schedules}" itemLabel="#{schedule.name}" />
+					</h:selectOneMenu>
+				</h:outputLabel>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
