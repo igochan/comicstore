@@ -13,6 +13,8 @@
 
 	<ui:define name="content">
 
+		<h:messages />
+
 		<h:form rendered="#{not addComicBean.newComic}">
 			<h:outputLabel value="#{i18n['comic.name']}">
 				<h:inputText id="searchName" value="#{addComicBean.comicName}"
@@ -22,8 +24,8 @@
 				action="#{addComicBean.searchComic}" />
 		</h:form>
 
-		<h:form id="comic_form" 
-			enctype="multipart/form-data" rendered="#{addComicBean.newComic}">
+		<h:form id="comic_form" enctype="multipart/form-data"
+			rendered="#{addComicBean.newComic}">
 
 			<h2>
 				<h:outputText value="#{i18n['comic.message.not_found']}" />
@@ -62,11 +64,12 @@
 			<h:panelGroup layout="panel"
 				rendered="#{empty addComicBean.issue.cover.coverImageFileName}">
 				<h:outputLabel value="#{i18n['issue.cover']}">
-					<h:inputFile id="cover_image" value="#{addComicBean.part}" />
+					<h:inputFile id="cover_image" value="#{addComicBean.part}">
+						<f:validator validatorId="core.view.ImageUploadValidator" />
+						<f:ajax event="change" listener="#{addComicBean.upload}"
+							execute=":comic_form:cover_image" render="@form" />
+					</h:inputFile>
 				</h:outputLabel>
-				<h:commandButton value="+" action="#{addComicBean.upload}">
-					<f:ajax execute=":comic_form:cover_image" render="@form" />
-				</h:commandButton>
 			</h:panelGroup>
 
 			<h:graphicImage id="cover"
@@ -92,7 +95,8 @@
 						value="#{addComicBean.comic.schedule}">
 						<f:selectItems var="schedule"
 							itemValue="#{addComicBean.comic.schedule}"
-							value="#{webApplicationBean.schedules}" itemLabel="#{schedule.name}" />
+							value="#{webApplicationBean.schedules}"
+							itemLabel="#{schedule.name}" />
 					</h:selectOneMenu>
 				</h:outputLabel>
 			</h:panelGroup>
