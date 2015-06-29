@@ -20,7 +20,7 @@ import comicstore.comic.entity.Schedule;
 
 @Named
 @ApplicationScoped
-public class ApplicationBean implements Serializable {
+public class WebApplicationBean implements Serializable {
 
 	private static final long serialVersionUID = -3355019384296653072L;
 	

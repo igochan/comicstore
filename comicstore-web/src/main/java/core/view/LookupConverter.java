@@ -7,7 +7,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import comicstore.ApplicationBean;
+import comicstore.WebApplicationBean;
 
 import core.persistence.LookupEntity;
 
@@ -33,9 +33,9 @@ public abstract class LookupConverter<T extends LookupEntity> implements Convert
 		return value.toString();
 	}
 
-	protected ApplicationBean getAppBean() {
+	protected WebApplicationBean getAppBean() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context,
-				"#{applicationBean}", ApplicationBean.class);
+				"#{applicationBean}", WebApplicationBean.class);
 	}
 }

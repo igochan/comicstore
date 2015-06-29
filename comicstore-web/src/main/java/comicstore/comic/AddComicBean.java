@@ -1,9 +1,10 @@
 package comicstore.comic;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ import comicstore.comic.entity.Comic;
 import comicstore.comic.entity.Cover;
 import comicstore.comic.entity.Issue;
 import comicstore.comic.entity.Publisher;
+import core.util.ConfigurationProperty;
 
 @Named
 @ViewScoped
@@ -35,6 +37,10 @@ public class AddComicBean implements Serializable {
 	// VARS
 	// ////////////////////////////////////////////////////////////////////////
 
+	@Inject
+	@ConfigurationProperty(value = "cover_image.directory")
+	private String imageDirectory;
+
 	private boolean advancedView = false;
 
 	private Comic comic;
@@ -46,7 +52,7 @@ public class AddComicBean implements Serializable {
 	private List<Issue> issues;
 
 	private boolean newComic = false;
-	
+
 	private Part part;
 
 	// ////////////////////////////////////////////////////////////////////////
@@ -78,7 +84,7 @@ public class AddComicBean implements Serializable {
 	public List<Issue> getIssues() {
 		return issues;
 	}
-	
+
 	public Part getPart() {
 		return part;
 	}
@@ -110,7 +116,7 @@ public class AddComicBean implements Serializable {
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
 	}
-	
+
 	public void setPart(Part part) {
 		this.part = part;
 	}
@@ -140,26 +146,12 @@ public class AddComicBean implements Serializable {
 		}
 	}
 
-	public void upload() throws Exception {
-		InputStream in = null;
-		FileOutputStream out = null;
+	public void upload() {
 		String fileName = getFileName(part);
-		File file = new File("/media/HDPortatil/img/" + fileName);
-		try {
-			in = part.getInputStream();
-			out = new FileOutputStream(file);
-			int read = 0;
-			final byte[] bytes = new byte[1024];
-			while ((read = in.read(bytes)) != -1) {
-				out.write(bytes, 0, read);
-			}
-		} finally {
-			if (out != null) {
-				out.close();
-			}
-			if (in != null) {
-				in.close();
-			}
+		try (InputStream input = part.getInputStream()) {
+			Files.copy(input, new File(imageDirectory, fileName).toPath());
+		} catch (IOException ex) {
+			// TODO: faces message
 		}
 		issue.getCover().setCoverImageFileName(fileName);
 	}

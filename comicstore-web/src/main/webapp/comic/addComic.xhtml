@@ -49,7 +49,7 @@
 					value="#{addComicBean.comic.format}">
 					<f:selectItems var="format"
 						itemValue="#{addComicBean.comic.format}"
-						value="#{applicationBean.formats}" itemLabel="#{format.name}" />
+						value="#{webApplicationBean.formats}" itemLabel="#{format.name}" />
 				</h:selectOneMenu>
 			</h:outputLabel>
 
@@ -83,7 +83,7 @@
 					<h:selectOneMenu id="genre" label="#{i18n['comic.genre']}"
 						value="#{addComicBean.comic.genre}">
 						<f:selectItems var="genre" itemValue="#{addComicBean.comic.genre}"
-							value="#{applicationBean.genres}" itemLabel="#{genre.name}" />
+							value="#{webApplicationBean.genres}" itemLabel="#{genre.name}" />
 					</h:selectOneMenu>
 				</h:outputLabel>
 
@@ -92,7 +92,7 @@
 						value="#{addComicBean.comic.schedule}">
 						<f:selectItems var="schedule"
 							itemValue="#{addComicBean.comic.schedule}"
-							value="#{applicationBean.schedules}" itemLabel="#{schedule.name}" />
+							value="#{webApplicationBean.schedules}" itemLabel="#{schedule.name}" />
 					</h:selectOneMenu>
 				</h:outputLabel>
 			</h:panelGroup>

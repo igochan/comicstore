@@ -8,11 +8,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import core.util.ConfigurationProperty;
 
 @WebServlet(urlPatterns = { "/images/*" })
 public class ImageServlet extends HttpServlet {
@@ -27,6 +30,8 @@ public class ImageServlet extends HttpServlet {
 	// Properties
 	// ---------------------------------------------------------------------------------
 
+	@Inject
+	@ConfigurationProperty("cover_image.directory")
 	private String imagePath;
 
 	// Actions
@@ -34,17 +39,6 @@ public class ImageServlet extends HttpServlet {
 
 	public void init() throws ServletException {
 
-		// Define base path somehow. You can define it as init-param of the
-		// servlet.
-		this.imagePath = "/media/HDPortatil/img/";
-
-		// In a Windows environment with the Applicationserver running on the
-		// c: volume, the above path is exactly the same as "c:\images".
-		// In UNIX, it is just straightforward "/images".
-		// If you have stored files in the WebContent of a WAR, for example in
-		// the
-		// "/WEB-INF/images" folder, then you can retrieve the absolute path by:
-		// this.imagePath = getServletContext().getRealPath("/WEB-INF/images");
 	}
 
 	protected void doGet(HttpServletRequest request,
