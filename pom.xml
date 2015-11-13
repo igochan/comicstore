@@ -20,7 +20,7 @@
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
-		<maven.ear.plugin.version>2.10</maven.ear.plugin.version>
+		<maven.ear.plugin.version>2.10.1</maven.ear.plugin.version>
 		<maven.war.plugin.version>2.6</maven.war.plugin.version>
 		<maven.ejb.plugin.version>2.5</maven.ejb.plugin.version>
 	</properties>

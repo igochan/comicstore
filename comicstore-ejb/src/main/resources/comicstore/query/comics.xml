@@ -5,11 +5,18 @@
 
 	<named-query name="Issue.selectAllByComic">
 		<query>
-			SELECT issue 
+			SELECT i 
 			FROM 
-				Issue issue
+				Issue i
 			WHERE
-				issue.comic = :comic
+				i.comic = :comic
+		</query>
+	</named-query>
+	<named-query name="Issue.selectLastAdded">
+		<query>
+			SELECT i 
+			FROM 
+				Issue i
 		</query>
 	</named-query>
 </entity-mappings>

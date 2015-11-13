@@ -36,6 +36,6 @@ public abstract class LookupConverter<T extends LookupEntity> implements Convert
 	protected WebApplicationBean getAppBean() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context,
-				"#{applicationBean}", WebApplicationBean.class);
+				"#{webApplicationBean}", WebApplicationBean.class);
 	}
 }

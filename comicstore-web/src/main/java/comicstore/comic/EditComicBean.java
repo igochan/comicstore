@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import comicstore.comic.entity.Comic;
 import comicstore.comic.entity.Issue;
+import comicstore.comic.entity.Publisher;
 
 @Named
 @ViewScoped
@@ -29,8 +30,9 @@ public class EditComicBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		logger.fine("Saving comic");
 		comic = new Comic();
+		Publisher publisher = new Publisher();
+		comic.setPublisher(publisher);
 		issue = new Issue();
 		issue.setComic(comic);
 	}

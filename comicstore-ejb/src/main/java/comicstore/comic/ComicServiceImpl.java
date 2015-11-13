@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
 import javax.persistence.NoResultException;
 
 import comicstore.comic.entity.Comic;
@@ -14,21 +13,19 @@ import comicstore.comic.entity.Issue;
 import core.service.GenericServiceImpl;
 
 @Stateless
-public class ComicServiceImpl extends GenericServiceImpl implements
-		ComicService {
+public class ComicServiceImpl extends GenericServiceImpl implements ComicService {
 
 	@Override
-	@TransactionAttribute()
+	public List<Issue> selectLastIssues() {
+		List<Issue> issues = genericDao.selectByTypedQuery(Issue.class, "Issue.selectLastAdded", null, 0, 20);
+		return issues;
+	}
+
+	@Override
 	public List<Issue> selectAllIssues(Comic comic) {
-		List<Issue> issues = null;
-		try {
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("comic", comic);
-			issues = genericDao.selectByTypedQuery(Issue.class,
-					"Issue.selectAllByComic", parameters, 0, 0);
-		} catch (NoResultException e) {
-			logger.log(Level.FINE, "No result found");
-		}
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("comic", comic);
+		List<Issue> issues = genericDao.selectByTypedQuery(Issue.class, "Issue.selectAllByComic", parameters, 0, 0);
 		return issues;
 	}
 
@@ -44,5 +41,4 @@ public class ComicServiceImpl extends GenericServiceImpl implements
 		}
 		return comic;
 	}
-
 }

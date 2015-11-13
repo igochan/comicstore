@@ -5,6 +5,7 @@
 	version="2.1">
 	<!-- Default datasource name. Do not use in production! -->
 	<persistence-unit name="comicstore" transaction-type="JTA">
+		<mapping-file>/comicstore/query/comics.xml</mapping-file>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action"
 				value="drop-and-create" />

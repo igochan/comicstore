@@ -1,7 +1,6 @@
 insert into FORMAT(id, version, name) values (1, 0, 'Comic book');
 insert into FORMAT(id, version, name) values (2, 0, 'Graphic novel');
 insert into FORMAT(id, version, name) values (3, 0, 'Comic strip');
-insert into FORMAT(id, version, name) values (4, 0, 'Daily');
 
 insert into GENRE(id, version, name) values (100, 0, 'Super heroes');
 insert into GENRE(id, version, name) values (101, 0, 'Adult');
@@ -11,7 +10,8 @@ insert into GENRE(id, version, name) values (104, 0, 'Manga');
 
 insert into SCHEDULE(id, version, name) values (200, 0, 'Monthly');
 insert into SCHEDULE(id, version, name) values (201, 0, 'Dialy');
-insert into SCHEDULE(id, version, name) values (302, 0, 'Annual');
+insert into SCHEDULE(id, version, name) values (202, 0, 'Annual');
+insert into SCHEDULE(id, version, name) values (203, 0, 'One shoot');
 
 --insert into CONDITION(id, version, name) values (401, 0, 'Mint');
 --insert into CONDITION(id, version, name) values (402, 0, 'Fine');

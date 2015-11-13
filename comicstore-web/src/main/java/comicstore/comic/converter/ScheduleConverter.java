@@ -1,4 +1,4 @@
-package comicstore.comic;
+package comicstore.comic.converter;
 
 import java.util.List;
 

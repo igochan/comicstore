@@ -8,7 +8,7 @@
 	<ui:define name="title">
 		<title>#{i18n['comic.add']}</title>
 	</ui:define>
-	
+
 	<ui:param name="selectMenu" value="comic" />
 
 	<ui:define name="content">
@@ -17,39 +17,44 @@
 				<h:inputText id="name" value="#{editComicBean.comic.name}"
 					label="#{i18n['comic.name']}" />
 			</h:outputLabel>
-			
+
 			<h:outputLabel value="#{i18n['comic.format']}">
 				<h:selectOneMenu id="format" label="#{i18n['comic.format']}"
 					value="#{editComicBean.comic.format}">
-					<f:selectItems var="format"
-						itemValue="#{editComicBean.comic.format}"
-						value="#{applicationBean.formats}" itemLabel="#{format.name}" />
+					<f:selectItem itemValue="#{null}" itemLabel=""
+						noSelectionOption="true" />
+					<f:selectItems var="format" itemValue="#{format.name}"
+						value="#{webApplicationBean.formats}" itemLabel="#{format.name}" />
 				</h:selectOneMenu>
 			</h:outputLabel>
-			
+
 			<h:outputLabel value="#{i18n['comic.genre']}">
 				<h:selectOneMenu id="genre" label="#{i18n['comic.genre']}"
 					value="#{editComicBean.comic.genre}">
-					<f:selectItems var="genre" itemValue="#{editComicBean.comic.genre}"
-						value="#{applicationBean.genres}" itemLabel="#{genre.name}" />
+					<f:selectItem itemValue="#{null}" itemLabel=""
+						noSelectionOption="true" />
+					<f:selectItems var="genre" itemValue="#{genre.name}"
+						value="#{webApplicationBean.genres}" itemLabel="#{genre.name}" />
 				</h:selectOneMenu>
 			</h:outputLabel>
-			
+
 			<h:outputLabel value="#{i18n['comic.schedule']}">
 				<h:selectOneMenu id="schedule" label="#{i18n['comic.schedule']}"
 					value="#{editComicBean.comic.schedule}">
-					<f:selectItems var="schedule"
-						itemValue="#{editComicBean.comic.schedule}"
-						value="#{applicationBean.schedules}" itemLabel="#{schedule.name}" />
+					<f:selectItem itemValue="#{null}" itemLabel=""
+						noSelectionOption="true" />
+					<f:selectItems var="schedule" itemValue="#{schedule.name}"
+						value="#{webApplicationBean.schedules}"
+						itemLabel="#{schedule.name}" />
 				</h:selectOneMenu>
 			</h:outputLabel>
-			
+
 			<h:outputLabel value="#{i18n['comic.publisher']}">
 				<h:inputText id="publisher"
 					value="#{editComicBean.comic.publisher.name}"
 					label="#{i18n['comic.publisher']}" />
 			</h:outputLabel>
-			
+
 			<h:outputLabel value="#{i18n['comic.volume']}">
 				<h:inputText id="volume" value="#{editComicBean.comic.volume}"
 					label="#{i18n['comic.volume']}" />
