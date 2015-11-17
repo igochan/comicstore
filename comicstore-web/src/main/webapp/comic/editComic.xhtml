@@ -15,7 +15,8 @@
 		<h:form>
 			<h:outputLabel value="#{i18n['comic.name']}">
 				<h:inputText id="name" value="#{editComicBean.comic.name}"
-					label="#{i18n['comic.name']}" />
+					label="#{i8n['comic.name']}" />
+				<h:message for="name" />
 			</h:outputLabel>
 
 			<h:outputLabel value="#{i18n['comic.format']}">
@@ -23,19 +24,22 @@
 					value="#{editComicBean.comic.format}">
 					<f:selectItem itemValue="#{null}" itemLabel=""
 						noSelectionOption="true" />
-					<f:selectItems var="format" itemValue="#{format.name}"
+					<f:selectItems var="format" itemValue="#{format}"
 						value="#{webApplicationBean.formats}" itemLabel="#{format.name}" />
 				</h:selectOneMenu>
+				<h:message for="format" />
 			</h:outputLabel>
+
 
 			<h:outputLabel value="#{i18n['comic.genre']}">
 				<h:selectOneMenu id="genre" label="#{i18n['comic.genre']}"
 					value="#{editComicBean.comic.genre}">
 					<f:selectItem itemValue="#{null}" itemLabel=""
 						noSelectionOption="true" />
-					<f:selectItems var="genre" itemValue="#{genre.name}"
+					<f:selectItems var="genre" itemValue="#{genre}"
 						value="#{webApplicationBean.genres}" itemLabel="#{genre.name}" />
 				</h:selectOneMenu>
+				<h:message for="genre" />
 			</h:outputLabel>
 
 			<h:outputLabel value="#{i18n['comic.schedule']}">
@@ -43,25 +47,30 @@
 					value="#{editComicBean.comic.schedule}">
 					<f:selectItem itemValue="#{null}" itemLabel=""
 						noSelectionOption="true" />
-					<f:selectItems var="schedule" itemValue="#{schedule.name}"
+					<f:selectItems var="schedule" itemValue="#{schedule}"
 						value="#{webApplicationBean.schedules}"
 						itemLabel="#{schedule.name}" />
 				</h:selectOneMenu>
+				<h:message for="schedule" />
 			</h:outputLabel>
 
 			<h:outputLabel value="#{i18n['comic.publisher']}">
 				<h:inputText id="publisher"
 					value="#{editComicBean.comic.publisher.name}"
 					label="#{i18n['comic.publisher']}" />
+				<h:message for="publisher" />
 			</h:outputLabel>
 
 			<h:outputLabel value="#{i18n['comic.volume']}">
 				<h:inputText id="volume" value="#{editComicBean.comic.volume}"
 					label="#{i18n['comic.volume']}" />
+				<h:message for="volume" />
 			</h:outputLabel>
 
 			<h:commandButton value="#{i18n['action.save']}"
 				action="#{editComicBean.save}" />
+				<h:commandButton value="#{i18n['action.add']}"
+				action="#{editComicBean.addIssue}" />
 		</h:form>
 	</ui:define>
 </ui:composition>

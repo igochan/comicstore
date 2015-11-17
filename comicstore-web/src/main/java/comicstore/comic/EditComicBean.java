@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +24,9 @@ public class EditComicBean implements Serializable {
 
 	@Inject
 	private ComicService comicService;
+
+	@Inject
+	private Flash flash;
 
 	private Comic comic;
 
@@ -56,7 +60,13 @@ public class EditComicBean implements Serializable {
 	public String save() {
 		logger.fine("Saving comic");
 		comicService.insert(comic);
-		return "index";
+		return "comic?faces-redirect=true";
+	}
+
+	public String addIssue() {
+		logger.fine("Adding issue");
+		flash.put("comic", comic);
+		return "editIssue?faces-redirect=true";
 	}
 
 	public void newIssue() {

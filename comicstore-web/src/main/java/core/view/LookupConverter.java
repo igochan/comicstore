@@ -30,7 +30,7 @@ public abstract class LookupConverter<T extends LookupEntity> implements Convert
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
-		return value.toString();
+		return ((LookupEntity) value).getName();
 	}
 
 	protected WebApplicationBean getAppBean() {

@@ -51,7 +51,7 @@ public class PersistenceFacadeImpl implements PersistenceFacade {
 		if (entity == null) {
 			throw new NullPointerException();
 		}
-		if (entity.getId() == null || !entity.getId().equals(0)) {
+		if (entity.getId() != null && !entity.getId().equals(0)) {
 			throw new IllegalStateException("Entity can't have an assigned id");
 		}
 		logger.log(Level.FINE, "Insert entity::Class={0}", entity.getClass().getCanonicalName());

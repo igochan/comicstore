@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -46,5 +47,11 @@ public abstract class AuditedEntity extends AbstractEntity {
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	@PrePersist
+	public void prePersist() {
+		user = "TODO: add user";
+		modified = new Date();
 	}
 }
